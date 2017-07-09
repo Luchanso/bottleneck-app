@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressWebpackPlugin = require('progress-bar-webpack-plugin');
 const packageJSON = require('./package');
 
@@ -9,11 +8,11 @@ const defaultConf = {
   entry: {
     app: [
       'babel-polyfill',
-      './src/app.jsx',
+      './src/App.jsx',
     ],
   },
   output: {
-    filename: 'bundle.[hash].js',
+    filename: '[name].[chunkhash].js',
     publicPath: '/',
     path: path.join(__dirname, 'build'),
   },
@@ -60,12 +59,6 @@ const defaultConf = {
       template: './public/index.html',
       inject: true,
     }),
-    new CopyWebpackPlugin([
-      {
-        context: './',
-        from: 'assets/**/*',
-      },
-    ]),
     new ProgressWebpackPlugin(),
   ],
   resolve: {
