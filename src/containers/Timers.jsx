@@ -45,7 +45,7 @@ Timers.propTypes = {
   classes: shape({
     container: string.isRequired,
   }).isRequired,
-}
+};
 
 const styleSheet = createStyleSheet('Timers', () => ({
   container: {
