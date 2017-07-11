@@ -26,9 +26,7 @@ class Timer extends React.Component {
             id="name"
             label="Name"
             fullWidth
-          >
-            Word of the Day
-          </TextField>
+          />
           <Typography
             className={classes.time}
             align="center"
