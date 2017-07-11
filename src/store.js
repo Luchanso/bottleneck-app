@@ -2,7 +2,7 @@ import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 import * as Redux from 'redux';
 import debug from 'debug';
-import reducer from './reducers';
+import reducer from 'reducer';
 
 const middlewares = [ReduxThunk];
 
