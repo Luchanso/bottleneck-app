@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ProgressWebpackPlugin = require('progress-bar-webpack-plugin');
 const packageJSON = require('./package');
 
 const defaultConf = {
@@ -59,7 +58,6 @@ const defaultConf = {
       template: './public/index.html',
       inject: true,
     }),
-    new ProgressWebpackPlugin(),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.json'],
