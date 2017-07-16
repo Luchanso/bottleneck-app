@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, string } from 'prop-types';
+import { shape, string, func } from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { red } from 'material-ui/colors';
 import DeleteIcon from 'material-ui-icons/Delete';
@@ -16,6 +16,12 @@ class Timer extends React.Component {
     const log = logger(`${this.constructor.name}`);
 
     log('Create timer');
+
+    this.handleDestroy = this.handleDestroy.bind(this);
+  }
+
+  handleDestroy() {
+    this.props.onDestroy({ id: this.props.id });
   }
 
   render() {
@@ -53,6 +59,7 @@ class Timer extends React.Component {
           <IconButton
             className={classes.btnDelete}
             aria-label="Delete"
+            onClick={this.handleDestroy}
           >
             <DeleteIcon />
           </IconButton>
@@ -63,9 +70,11 @@ class Timer extends React.Component {
 }
 
 Timer.propTypes = {
+  id: string.isRequired,
   classes: shape({
     time: string.isRequired,
   }).isRequired,
+  onDestroy: func.isRequired,
 };
 
 const styleSheet = createStyleSheet('Timer', theme => ({
@@ -73,16 +82,19 @@ const styleSheet = createStyleSheet('Timer', theme => ({
     marginTop: 16,
     color: theme.palette.primary[500],
   },
+
   controls: {
     display: 'flex',
     justifyContent: 'center',
     marginTop: 16,
   },
+
   btnToggle: {
     color: 'white',
   },
-  cardActions: {
-    // justifyContent: 'flex-end',
+
+  btnDelete: {
+    color: red[500],
   },
 }));
 

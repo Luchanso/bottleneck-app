@@ -39,8 +39,24 @@ const handleCreate = (state) => {
   };
 };
 
+const handleDelete = (state, action) => {
+  const { id } = action.payload;
+
+  const newList = {
+    ...state.list,
+  };
+
+  delete newList[id];
+
+  return {
+    ...state,
+    list: newList,
+  };
+};
+
 export default handleActions({
   [create]: handleCreate,
+  [destroy]: handleDelete,
 }, initialState);
 
 export const getAllTimers = timers =>
