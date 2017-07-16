@@ -1,10 +1,12 @@
 import { createAction, handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
+import logger from 'src/logger';
 
 const prefix = 'timers';
 
 const initialState = {
   started: '',
+  list: {},
 };
 
 export const create = createAction(`${prefix}/CREATE`);
@@ -16,19 +18,30 @@ export const stop = createAction(`${prefix}/STOP`);
 
 const handleCreate = (state) => {
   const id = uuid();
+  const order = Object.values(state.list).length;
+  const log = logger('ducks.timers.handleCreate');
+
+  log('id', id);
+  log('order', order);
 
   return {
     ...state,
-    [id]: {
-      id,
-      isStart: false,
-      isStop: true,
-      name: '',
-      actions: [],
+    list: {
+      ...state.list,
+      [id]: {
+        id,
+        order,
+        isStart: false,
+        isStop: true,
+        name: '',
+      },
     },
   };
 };
 
 export default handleActions({
-  create: handleCreate,
+  [create]: handleCreate,
 }, initialState);
+
+export const getAllTimers = timers =>
+  Object.values(timers.list);
