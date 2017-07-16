@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/app.jsx",
   "scripts": {
-    "start": "webpack-dev-server --port 8080 --inline",
-    "build": "webpack -p",
+    "start": "webpack-dev-server --port 8080 --inline --progress",
+    "build": "webpack -p --progress",
     "lint": "eslint src/**/*.jsx src/**/*.js --ext .jsx --ext .js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,6 +29,7 @@
     "react-jss": "^7.0.0-pre.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
+    "recompose": "^0.24.0",
     "redux": "^3.7.1",
     "redux-actions": "^2.0.3",
     "redux-logger": "^3.0.6",
@@ -41,6 +42,7 @@
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.1.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
