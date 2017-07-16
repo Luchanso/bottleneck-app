@@ -1,18 +1,21 @@
 import React from 'react';
 import { shape, string } from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
-import { red, white } from 'material-ui/colors';
+import { red } from 'material-ui/colors';
 import DeleteIcon from 'material-ui-icons/Delete';
 import PlayIcon from 'material-ui-icons/PlayArrow';
 import RestoreIcon from 'material-ui-icons/Restore';
 import { CardContent, CardActions } from 'material-ui/Card';
 import { Typography, TextField, Card, IconButton, Button } from 'material-ui';
+import logger from 'src/logger';
 
 class Timer extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log('Timer created');
+    const log = logger(`${this.constructor.name}`);
+
+    log('Create timer');
   }
 
   render() {

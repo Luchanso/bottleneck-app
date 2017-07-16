@@ -1,8 +1,8 @@
 import React from 'react';
 import { shape, string, func, arrayOf } from 'prop-types';
 import { compose } from 'recompose';
-import { connect } from 'react-redux'
-import { Grid, Button } from 'material-ui';
+import { connect } from 'react-redux';
+import { Grid, Button, Typography } from 'material-ui';
 import IconAdd from 'material-ui-icons/Add';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { getAllTimers } from 'src/reducer';
@@ -13,13 +13,19 @@ class Timers extends React.Component {
   renderTimers() {
     const { timers } = this.props;
 
-    return timers.map(timer => {
+    const nodeTimers = timers.map((timer) => {
       return (
         <Grid key={timer.id} item lg={2} md={3} sm={3} xs={4}>
           <Timer />
         </Grid>
       );
     });
+
+    return (
+      <Grid container gutter={16}>
+        { nodeTimers }
+      </Grid>
+    );
   }
 
   renderBtnAddTimer() {
@@ -39,16 +45,40 @@ class Timers extends React.Component {
     );
   }
 
+  renderInstruction() {
+    const { classes } = this.props;
+    const optionsTitle = {
+      type: 'display4',
+      gutterBottom: true,
+      align: 'center',
+    };
+
+    const optionsContainer = {
+      className: classes.instruction,
+      justify: 'center',
+      direction: 'column',
+      container: true,
+    };
+
+    return (
+      <Grid {...optionsContainer}>
+        <Typography {...optionsTitle}>
+          Add new timer
+        </Typography>
+      </Grid>
+    );
+  }
+
   render() {
     const { classes } = this.props;
+    const { timers } = this.props;
     return (
       <div className={classes.container}>
-        <Grid container gutter={16}>
-          <Grid item lg={2} md={3} sm={3} xs={4}>
-            <Timer />
-          </Grid>
-          { this.renderTimers() }
-        </Grid>
+        {
+          timers.length === 0 ?
+          this.renderInstruction() :
+          this.renderTimers()
+        }
         { this.renderBtnAddTimer() }
       </div>
     );
@@ -71,8 +101,7 @@ Timers.defaultProps = {
 const styleSheet = createStyleSheet('Timers', () => ({
   container: {
     backgroundColor: '#eee',
-    marginTop: 8,
-    padding: '0 8px',
+    padding: '8px',
     height: '100%',
   },
 
@@ -81,6 +110,10 @@ const styleSheet = createStyleSheet('Timers', () => ({
     right: 25,
     bottom: 25,
     zIndex: 2,
+  },
+
+  instruction: {
+    height: '100%',
   },
 }));
 
