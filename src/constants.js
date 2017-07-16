@@ -3,4 +3,6 @@ export const TIMER_ACTIONS = {
   STOP: 'stop',
 };
 
+export const APP_NAME = 'Bottleneck';
+
 export default null;
