@@ -65,7 +65,7 @@ Timer.propTypes = {
   }).isRequired,
 };
 
-const styleSheet = createStyleSheet('Timers', theme => ({
+const styleSheet = createStyleSheet('Timer', theme => ({
   time: {
     marginTop: 16,
     color: theme.palette.primary[500],
@@ -79,7 +79,7 @@ const styleSheet = createStyleSheet('Timers', theme => ({
     color: 'white',
   },
   cardActions: {
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
   },
 }));
 
