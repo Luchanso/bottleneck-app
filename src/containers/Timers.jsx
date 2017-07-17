@@ -46,7 +46,7 @@ class Timers extends React.Component {
   }
 
   renderInstruction() {
-    const { classes } = this.props;
+    const { classes, onCreateTimer } = this.props;
     const optionsTitle = {
       type: 'display4',
       gutterBottom: true,
@@ -58,6 +58,9 @@ class Timers extends React.Component {
       justify: 'center',
       direction: 'column',
       container: true,
+      onClick: () => {
+        onCreateTimer();
+      },
     };
 
     return (
@@ -79,7 +82,7 @@ class Timers extends React.Component {
           this.renderInstruction() :
           this.renderTimers()
         }
-        { this.renderBtnAddTimer() }
+        { timers.length !== 0 && this.renderBtnAddTimer() }
       </div>
     );
   }
@@ -115,6 +118,7 @@ const styleSheet = createStyleSheet('Timers', () => ({
 
   instruction: {
     height: '100%',
+    cursor: 'pointer',
   },
 }));
 
