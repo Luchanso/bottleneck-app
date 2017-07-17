@@ -34,6 +34,7 @@ const handleCreate = (state) => {
         isStart: false,
         isStop: true,
         name: '',
+        intervals: [],
       },
     },
   };
@@ -54,9 +55,84 @@ const handleDelete = (state, action) => {
   };
 };
 
+const handleStart = (state, action) => {
+  const { id } = action.payload;
+
+  const allTimers = getAllTimers(state);
+  const newList = {};
+
+  allTimers.forEach((timer) => {
+    if (timer.id === id) {
+      newList[timer.id] = {
+        ...timer,
+        isStart: true,
+        isStop: false,
+        intervals: [...timer.intervals, {
+          start: Date.now(),
+        }],
+      };
+    } else {
+      newList[timer.id] = {
+        ...timer,
+        isStart: false,
+        isStop: true,
+      };
+
+      if (timer.isStart) {
+        newList[timer.id]
+          .intervals[
+            timer.intervals.length - 1
+          ]
+          .stop = Date.now();
+      }
+    }
+  });
+
+  return {
+    ...state,
+    list: newList,
+    started: id,
+  };
+};
+
+const handleStop = (state, action) => {
+  const { id } = action.payload;
+  const { list } = state;
+  const timer = list[id];
+
+  const log = logger('ducks.timers.handleStop');
+
+  log('state.started', state.started);
+  log('id', id);
+
+  if (state.started !== id) return state;
+
+  const intervals = [...timer.intervals];
+
+  intervals[intervals.length - 1].stop = Date.now();
+
+  return {
+    ...state,
+    list: {
+      ...list,
+      [id]: {
+        ...timer,
+        isStart: false,
+        isStop: true,
+        intervals,
+      },
+    },
+    started: '',
+  };
+};
+
 export default handleActions({
   [create]: handleCreate,
   [destroy]: handleDelete,
+  [start]: handleStart,
+  [stop]: handleStop,
+  // [rename]: handleRename,
+  // [reset]: handleReset,
 }, initialState);
 
 export const getAllTimers = timers =>

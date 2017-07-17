@@ -11,12 +11,22 @@ import Timer from 'components/Timer';
 
 class Timers extends React.Component {
   renderTimers() {
-    const { timers, onDestroyTimer } = this.props;
+    const {
+      timers,
+      onDestroyTimer,
+      onStartTimer,
+      onStopTimer,
+    } = this.props;
 
     const nodeTimers = timers.map((timer) => {
       return (
         <Grid key={timer.id} item lg={2} md={3} sm={3} xs={4}>
-          <Timer onDestroy={onDestroyTimer} id={timer.id} />
+          <Timer
+            onDestroy={onDestroyTimer}
+            onStart={onStartTimer}
+            onStop={onStopTimer}
+            timer={timer}
+          />
         </Grid>
       );
     });
@@ -94,6 +104,8 @@ Timers.propTypes = {
     btnAddTimer: string.isRequired,
   }).isRequired,
   onCreateTimer: func.isRequired,
+  onStartTimer: func.isRequired,
+  onStopTimer: func.isRequired,
   onDestroyTimer: func.isRequired,
   timers: arrayOf(shape({})),
 };
@@ -133,6 +145,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   onCreateTimer: duckTimers.create,
   onDestroyTimer: duckTimers.destroy,
+  onStartTimer: duckTimers.start,
+  onStopTimer: duckTimers.stop,
 };
 
 export default compose(
