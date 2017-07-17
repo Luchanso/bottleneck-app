@@ -1,5 +1,6 @@
 import React from 'react';
 import { shape, string, func, bool } from 'prop-types';
+import classnames from 'classnames';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { red } from 'material-ui/colors';
 import DeleteIcon from 'material-ui-icons/Delete';
@@ -32,7 +33,7 @@ class Timer extends React.Component {
     if (nextProps.timer.isStart && this.props.timer.isStop) {
       this.updateLoop = setInterval(() => {
         this.forceUpdate();
-      }, 1);
+      }, 1000);
     } else if (nextProps.timer.isStop && this.props.timer.isStart) {
       clearInterval(this.updateLoop);
     }
@@ -80,17 +81,42 @@ class Timer extends React.Component {
 
   renderStopwatch() {
     const { classes, timer } = this.props;
-    const { intervals } = timer;
+    const { intervals, isStart } = timer;
 
     const summary = calculateTotalTime(intervals);
 
+    let seconds = Math.floor(summary / 1000) % 60;
+    let minutes = Math.floor(summary / 1000 / 60) % 60;
+    const hours = Math.floor(summary / 1000 / 60 / 60);
+    let formatedString = '';
+
+    if (seconds < 10 || seconds === 0) {
+      seconds = `0${seconds}`;
+    }
+
+    if (minutes < 10 || minutes === 0) {
+      minutes = `0${minutes}`;
+    }
+
+    if (hours === 0) {
+      formatedString = `${minutes}:${seconds}`;
+    } else {
+      formatedString = `${hours}:${minutes}:${seconds}`;
+    }
+
+    const options = {
+      className: classnames(classes.time, {
+        [classes.activeColor]: isStart,
+      }),
+      align: 'center',
+      type: 'display1',
+    };
+
     return (
       <Typography
-        className={classes.time}
-        align="center"
-        type="display1"
+        {...options}
       >
-        { summary }
+        { formatedString }
       </Typography>
     );
   }
@@ -162,6 +188,9 @@ Timer.propTypes = {
 const styleSheet = createStyleSheet('Timer', theme => ({
   time: {
     marginTop: 16,
+  },
+
+  activeColor: {
     color: theme.palette.primary[500],
   },
 
